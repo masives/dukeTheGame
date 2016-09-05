@@ -86,10 +86,22 @@ public class Screen {
 			}
 		}
 		*/
+		Cell board[][] = new Cell[ROWS][COL];
 		
-		Cell board = new Cell();
-		frame.getContentPane().add(board.panel);
-		board.setLabel("test label");
+		for(int i = 0; i < ROWS; i++){
+			for (int j = 0; j < COL; j++){
+				board[i][j] = new Cell();
+				frame.getContentPane().add(board[i][j].panel);
+				board[i][j].setLabel("row:" + i + " col" + j);
+				
+				board[i][j].rowAdder();
+				System.out.println(board[i][j].rowID);
+				
+				System.out.println(board[i][j].panel.getMouseListeners());//each board panel has a different mouse listener, but how to use this
+			}
+		}
+			
+		
 		
 		/*
 		for (int i = 0; i < panel.length; i++) {
@@ -108,20 +120,35 @@ public class Screen {
 	}
 	
 	public class Cell{//to be implemented
-		
+		//main part of cell
 		JPanel panel;
 		JLabel label;
+		//cell indexing
+		int rowID = 0;
+		int colID = 0;
+		void rowAdder(){
+			rowID++;
+		}
 		
+		//setter for label name
 		void setLabel(String newLabel){
 			label.setText(newLabel);
 		}
-		
+		//constructor for initializing cell content with memory, and mouselistener
 		public Cell(){
 			panel = new JPanel();
 			label = new JLabel();
 			panel.add(label);
-		}
-		
+			//add MouseListener
+			panel.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent panelClicked) {
+					// TODO Auto-generated method stub
+					System.out.println("panel clicked" + colID + rowID);
+					super.mouseClicked(panelClicked);
+				}
+			});
+		}		
 	}
 }
 
