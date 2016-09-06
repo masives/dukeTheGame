@@ -8,6 +8,8 @@ public class ApplicationMain {
 		mainWindow gameWindow = new mainWindow();
 		gameWindow.mainFrame.setVisible(true);
 		*/
+		
+		
 		Screen window = new Screen();
 		window.frame.setVisible(true);
 		

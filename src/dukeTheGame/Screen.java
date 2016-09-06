@@ -12,24 +12,6 @@ import javax.swing.JPanel;
 public class Screen {
 
 	JFrame frame;
-
-	/**
-	 * Launch the application.
-	 */
-	/*
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					Screen window = new Screen();
-					window.frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	*/
 	
 	/**
 	 * Create the application.
@@ -52,103 +34,63 @@ public class Screen {
 		frame.getContentPane().setBackground(Color.LIGHT_GRAY);
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// layout based  on constants
+		
+		// layout based  on constants for the board only (no place for draw button or message box at the moment)
 		frame.getContentPane().setLayout(new GridLayout(ROWS, COL, 2, 2)); 
 
-		
-		// arrays for panel and label(label for testing only?)
-		JPanel panel[][] = new JPanel[ROWS][COL];
-		JLabel label[][] = new JLabel[ROWS][COL];
-
-		// array for mouse events inside the panels, so each one has it's own
-		// event; not implemented yet
-		MouseEvent panelClicked[][] = new MouseEvent[ROWS][COL];
-		
-		
-		/* long loop for creating entire board 
-		for (int i = 0; i < panel.length; i++) {
-			for (int j = 0; j < panel[i].length; j++) {
-				panel[i][j] = new JPanel();// instantiate panel in array?
-				frame.getContentPane().add(panel[i][j]);
-
-				label[i][j] = new JLabel();
-				label[i][j].setText("Row: " + i + " Col:" + j);
-				panel[i][j].add(label[i][j]);
-				
-				panel[i][j].addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent panelClicked) {
-						// TODO Auto-generated method stub
-						System.out.println("panel clicked");
-						super.mouseClicked(panelClicked);
-					}
-				});
-			}
-		}
-		*/
 		Cell board[][] = new Cell[ROWS][COL];
+		Index index = new Index();
 		
 		for(int i = 0; i < ROWS; i++){
+			index.setRow(i);
 			for (int j = 0; j < COL; j++){
 				board[i][j] = new Cell();
 				frame.getContentPane().add(board[i][j].panel);
-				board[i][j].setLabel("row:" + i + " col" + j);
+				index.setCol(j);
+				board[i][j].setLabel("row:" + index.getRowId() + " col" + index.getColId());
 				
-				board[i][j].rowAdder();
-				System.out.println(board[i][j].rowID);
-				
-				System.out.println(board[i][j].panel.getMouseListeners());//each board panel has a different mouse listener, but how to use this
+				System.out.println(board[i][j].panel.getMouseListeners());//each board panel has a different mouse listener, but how to use this?
 			}
 		}
-			
-		
-		
-		/*
-		for (int i = 0; i < panel.length; i++) {
-			for (int j = 0; j < panel[i].length; j++) {
-				panel[i][j].addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseClicked(MouseEvent panelClicked) {
-						// TODO Auto-generated method stub
-						System.out.println("clicked panel" + i + j); //wyrzuca problem, ze powinno byc final
-						super.mouseClicked(panelClicked);
-					}
-				});
-			}
-		}
-		*/
 	}
 	
-	public class Cell{//to be implemented
+	public class Index{
+		private int rowId = 0;
+		private int colId = 0;
+		public void setRow(int row){rowId = row;}
+		public void setCol(int col){colId = col;}
+		public int getRowId(){return rowId;}
+		public int getColId(){return colId;}
+	}
+	
+	public class Cell{	
+		
 		//main part of cell
 		JPanel panel;
 		JLabel label;
-		//cell indexing
-		int rowID = 0;
-		int colID = 0;
-		void rowAdder(){
-			rowID++;
-		}
+		//setter for label name, for convenience
+		void setLabel(String newLabel){label.setText(newLabel);}
 		
-		//setter for label name
-		void setLabel(String newLabel){
-			label.setText(newLabel);
-		}
 		//constructor for initializing cell content with memory, and mouselistener
 		public Cell(){
 			panel = new JPanel();
 			label = new JLabel();
 			panel.add(label);
-			//add MouseListener
+			//add MouseListener, this should be done outside of a class so it can provide input to input handler?
 			panel.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent panelClicked) {
 					// TODO Auto-generated method stub
-					System.out.println("panel clicked" + colID + rowID);
+					System.out.println(label.getText());
 					super.mouseClicked(panelClicked);
 				}
 			});
 		}		
+	}
+	
+	class Unit{
+		String name;
+		//movement
 	}
 }
 
