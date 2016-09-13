@@ -2,8 +2,6 @@ package dukeTheGame;
 
 import java.awt.Color;
 import java.awt.GridLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -17,7 +15,7 @@ public class Screen {
 	//gui elements and selection handler
 	JFrame frame;
 	Cell board[][] = new Cell[ROWS][COL];
-	SelectedCell selected = new SelectedCell();
+	InputHandler inputHandler = new InputHandler();
 	/**
 	 * Create the application.
 	 */
@@ -40,13 +38,13 @@ public class Screen {
 		
 		for(int i = 0; i < ROWS; i++){
 			for (int j = 0; j < COL; j++){
+				//create cell, index it, name it and add input handler
 				board[i][j] = new Cell();
 				frame.getContentPane().add(board[i][j].panel);
 				board[i][j].setRow(i);
 				board[i][j].setCol(j);
 				board[i][j].setLabel("row:" + board[i][j].getRowId() + " col" + board[i][j].getColId());
-				
-				System.out.println(board[i][j].panel.getMouseListeners());//each board panel has a different mouse listener, but how to use this?
+				inputHandler.addMouseListener(board[i][j]);
 			}
 		}
 	}
@@ -66,45 +64,13 @@ public class Screen {
 		//setter for label name, for convenience
 		void setLabel(String newLabel){label.setText(newLabel);}
 		
-		//constructor for initializing cell with it's label, and mouselistener (should mouse listener be added later?)
+		//constructor for initializing cell with it's label
 		public Cell(){
-			//panel = new JPanel();
 			panel.add(label);
-			
-			//add MouseListener, this should be done outside of a class so it can provide input to input handler?
-			panel.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent panelClicked) {
-					System.out.println(label.getText());
-					selected.selection(getRowId(), getColId());
-					selected.isUnitInCell(getRowId(), getColId());
-					super.mouseClicked(panelClicked);
-				}
-			});
 		}
 		
-		//unit part of cell
+		//unit part of cell, instead of using boolean for unitExist unitobject wihout reference can check that
 		boolean unitExist;
-		Unit unit = new Unit();
+		Unit unit;
 	}
-	
-	//class for handling selection (mouse input)
-	public class SelectedCell{
-		boolean cellSelected;
-		int row;
-		int col;
-		
-		void selection(int row, int col){
-			this.cellSelected = true;
-			this.row = row;
-			this.col = col;
-			System.out.println("Current selected cell is: row-" +  this.row + " col-" + this.col);
-		}
-		void isUnitInCell(int row, int col){
-			if (board[row][col].unitExist == true)
-				System.out.println("Unit exists, it's: " + board[row][col].unit.getName());//will work only for board object, not reusable!
-			else
-				System.out.println("Cell is empty");
-		}
-	}	
 }
