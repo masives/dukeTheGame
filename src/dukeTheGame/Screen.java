@@ -36,20 +36,31 @@ public class Screen {
 			for (int j = 0; j < COL; j++){
 				cells[i][j] = new Cell();
 				frame.getContentPane().add(cells[i][j].panel);
-				cells[i][j].setLabel("row:" + i + " col" + j + "\n unit type: " + cells[i][j].unitType);
+				cells[i][j].assignCoordinates(i, j);
+				cells[i][j].updateLabel();
 			}
 		}
 	}
 	
 	public class Cell{	
+		int row;
+		int col;
+		
+		void assignCoordinates(int row, int col){
+			this.row = row;
+			this.col = col;
+		}
+		
 		JPanel panel = new JPanel();
 		JLabel label = new JLabel();
 		
-		void setLabel(String newLabel){label.setText(newLabel);}
+		void updateLabel(){
+			label.setText("row: " + this.row + " col: " + this.col + "\n unit type: " + this.unitType + "\n color: " + this.color);
+		}
 		
 		TypesOfUnit unitType;
 		FieldColor color;
-				
+			
 		public Cell(){
 			panel.add(label);
 			unitType = TypesOfUnit.EMPTY;

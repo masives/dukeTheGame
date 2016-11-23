@@ -12,22 +12,19 @@ public class InputHandler {
 	static GameState gameState = GameState.whiteSetup;
 	static FieldColor currentPlayer = FieldColor.WHITE;
 	
-	static void addMouseListenersToBoard(Cell[][] cells){
+	void addMouseListenersToBoard(Cell[][] cells){
 		for(int i = 0; i < ROWS; i++){
 			for (int j = 0; j < COL; j++){
-				//create cell,  name it and add input handler
-				//Cell targetCell = cells[ROWS][COL];
 				addMouseListener(cells[i][j]);
 			}
 		}
 	}
 	
-	static void addMouseListener(final Cell cell){
+	void addMouseListener(final Cell cell){
 		cell.panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent panelClicked) {
 				handleInput(cell);				 
-				//i tu pytac o logike
 			}
 		});
 	}
@@ -35,37 +32,56 @@ public class InputHandler {
 	static void handleInput(Cell cell){
 		switch(gameState){
 		case whiteSetup:
-			setDuke(cell, currentPlayer);
-			System.out.println("Where to place knight");
-			setKnight(cell, currentPlayer);
+			setupPlayer(cell);
 			break;
 		default:
 			System.out.println("something went wrong");
 		}
 		System.out.println("Clicked cell: " + cell.label.getText());
-		
+	}
+	
+	static boolean wasDukeSet = false;
+	static int numberOfKnightsSet = 0;	
+	static void setupPlayer(Cell clickedCell){		
+		if (wasDukeSet == false){
+			setUnit(clickedCell, TypesOfUnit.DUKE);
+			//updateDukePosition(clickedCell);
+			wasDukeSet = true;
+		}
+		else if (numberOfKnightsSet != 2){
+			setUnit(clickedCell, TypesOfUnit.KNIGHT);
+			numberOfKnightsSet ++;
+		}
+		else
+			gameState = GameState.blackSetup;
 	}
 	
 	//to be inmplemented later, leave for until the listener is done correctly
-	DukePosition whiteDukePosition = new DukePosition();
-	DukePosition blackDukePosition = new DukePosition();
+	static DukePosition whiteDukePosition;
+	static DukePosition blackDukePosition;
 	
 	class DukePosition{
 		int row;
 		int col;
 	}
+	static void updateDukePosition(Cell dukeCell){
+		if (currentPlayer == FieldColor.WHITE){
+			whiteDukePosition.row = dukeCell.row;
+			whiteDukePosition.col = dukeCell.col;
+		}
+		else{
+			blackDukePosition.row = dukeCell.row;
+			blackDukePosition.col = dukeCell.col;
+		}
+	}
 		
 	
-	static void setDuke(Cell dukeDestination, FieldColor currentPlayer) {
-		dukeDestination.unitType = TypesOfUnit.DUKE;
+	static void setUnit(Cell dukeDestination, TypesOfUnit unit) {
+		dukeDestination.unitType = unit;
 		dukeDestination.color = currentPlayer;
+		dukeDestination.updateLabel();
 		}
-	
-	static void setKnight(Cell knightDestination, FieldColor currentPlayer) {
-		knightDestination.unitType = TypesOfUnit.KNIGHT;
-		knightDestination.color = currentPlayer;
-		}
-	
+		
 	enum GameState{
 		whiteSetup,
 		blackSetup,
