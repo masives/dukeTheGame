@@ -1,4 +1,4 @@
-package dukeTheGame;
+package enums;
 
 public enum FieldColor {
 	EMPTY,

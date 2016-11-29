@@ -7,14 +7,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import enums.FieldColor;
+import enums.TypesOfUnit;
+
 public class Screen {
-	// constants for board size, same as in InputHandler which is a bad solution
-	public static final int ROWS = 4;
-	public static final int COL = 4;
-	
 	//gui elements and array for cells
 	JFrame frame;
-	Cell cells[][] = new Cell[ROWS][COL];
+	Cell cells[][] = new Cell[GlobalsAndControl.ROWS][GlobalsAndControl.COL];
 	
 	public Screen() {
 		initializeFrame();
@@ -29,11 +28,11 @@ public class Screen {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// layout based  on constants for the board only (no place for draw button or message box at the moment)
-		frame.getContentPane().setLayout(new GridLayout(ROWS, COL, 2, 2)); 
+		frame.getContentPane().setLayout(new GridLayout(GlobalsAndControl.ROWS, GlobalsAndControl.COL, 2, 2)); 
 	}
 	private void assignCells(){
-		for(int i = 0; i < ROWS; i++){
-			for (int j = 0; j < COL; j++){
+		for(int i = 0; i < GlobalsAndControl.ROWS; i++){
+			for (int j = 0; j < GlobalsAndControl.COL; j++){
 				cells[i][j] = new Cell();
 				frame.getContentPane().add(cells[i][j].panel);
 				cells[i][j].assignCoordinates(i, j);
