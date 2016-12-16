@@ -2,34 +2,41 @@ package dukeTheGame;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import enums.FieldColor;
+import enums.MovementPolarity;
 import enums.TypesOfUnit;
 
 public class Screen {
 	//gui elements and array for cells
 	JFrame frame;
-	Cell cells[][] = new Cell[GlobalsAndControl.ROWS][GlobalsAndControl.COL];
+	static Cell cells[][] = new Cell[GlobalsAndControl.ROWS][GlobalsAndControl.COL];
+	JButton button;
 	
 	public Screen() {
 		initializeFrame();
 		assignCells();
+		addButton();
 	}
 
 	private void initializeFrame() {
 		// top level frame which will hold the board
 		frame = new JFrame("Duke");
 		frame.getContentPane().setBackground(Color.LIGHT_GRAY);
-		frame.setBounds(100, 100, 450, 300);
+		frame.setBounds(100, 100, 800, 600);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// layout based  on constants for the board only (no place for draw button or message box at the moment)
-		frame.getContentPane().setLayout(new GridLayout(GlobalsAndControl.ROWS, GlobalsAndControl.COL, 2, 2)); 
+		frame.getContentPane().setLayout(new GridLayout((GlobalsAndControl.ROWS +1), GlobalsAndControl.COL, 2, 2)); 
 	}
+	
 	private void assignCells(){
 		for(int i = 0; i < GlobalsAndControl.ROWS; i++){
 			for (int j = 0; j < GlobalsAndControl.COL; j++){
@@ -59,11 +66,27 @@ public class Screen {
 		
 		TypesOfUnit unitType;
 		FieldColor color;
+		MovementPolarity movementPolarity;
 			
 		public Cell(){
 			panel.add(label);
 			unitType = TypesOfUnit.EMPTY;
 			color = FieldColor.EMPTY;
+			movementPolarity = movementPolarity.NONE;
 		}
 	}
+	
+	//button to be yet implemented
+	void addButton(){
+	JButton button = new JButton("Draw");
+	frame.getContentPane().add(button);
+	button.addActionListener(new ActionListener(){
+		public void actionPerformed(ActionEvent e){
+			GameLoopHandler.drawButtonClicked = true;
+			System.out.println("Draw button clicked");
+		}
+	});
+	}
+	
+	
 }

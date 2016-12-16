@@ -11,6 +11,5 @@ public class ApplicationMain {
 		inputHandler.addMouseListenersToBoard(window.cells);
 		
 		System.out.println("White player please choose a place for duke");
-		
 	}
 }

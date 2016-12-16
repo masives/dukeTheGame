@@ -5,10 +5,10 @@ import enums.FieldColor;
 import enums.GameState;
 
 public class GlobalsAndControl {
-	public static final int ROWS = 4;
-	public static final int COL = 4;
+	public static final int ROWS = 6;
+	public static final int COL = 6;
 	
-	public static GameState gameState = GameState.whiteSetup;
+	public static GameState gameState = GameState.PLAYER_SETUP;
 	public static FieldColor currentPlayer = FieldColor.WHITE;
 	
 	static Cell whiteDukePosition;

@@ -1,8 +1,8 @@
 package enums;
 
 public enum GameState {
-		whiteSetup,
-		blackSetup,
+		PLAYER_SETUP,
+		GAME_LOOP,
 		choiceOfField,
 		drawUnit,
 		moveUnit,
