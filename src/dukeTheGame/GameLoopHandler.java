@@ -32,6 +32,7 @@ public class GameLoopHandler {
 				moveUnit();
 				changePlayer();
 				setPanelColorsToDefault();
+				posibleMovementCells.clear();
 				selectedCell = null;
 			}
 			else{
@@ -44,6 +45,9 @@ public class GameLoopHandler {
 		else if (clickedCell.unitType!=null && clickedCell.color==currentPlayer){
 			selectedCell = clickedCell;
 			revealPosibleMovement();
+			for(Cell cell: posibleMovementCells){
+				cell.panel.setBackground(Color.RED);
+			}
 			System.out.println("Unit selected, please choose your destination");
 		}
 		//also if the draw is picked there should be a function for drawing
@@ -64,13 +68,16 @@ public class GameLoopHandler {
 	private static void moveUnit(){
 		copyUnit();
 		deleteUnit();
+		if(selectedCell.unitType == TypesOfUnit.DUKE){
+			//endTheGame
+		}
 	}
 	
 	private static void copyUnit(){
 		cellToBeMoved.color = currentPlayer;
 		cellToBeMoved.unitType = selectedCell.unitType;
 		cellToBeMoved.movementPolarity = selectedCell.movementPolarity;
-		changeMovementPolarity(cellToBeMoved.movementPolarity);
+		changeMovementPolarity();
 		cellToBeMoved.updateLabel();//to be removed later, for visibility purpose only
 	}
 	private static void deleteUnit(){
@@ -80,11 +87,11 @@ public class GameLoopHandler {
 		selectedCell.updateLabel();//to be removed later
 	}
 	
-	private static void changeMovementPolarity(MovementPolarity currentPolarity){
-		if(currentPolarity==MovementPolarity.BLACK)
-			currentPolarity =MovementPolarity.WHITE;
-		else if (currentPolarity==MovementPolarity.WHITE)
-			currentPolarity =MovementPolarity.BLACK;
+	private static void changeMovementPolarity(){//can I make a pointer and referance it or I have to reference it directly?
+		if(cellToBeMoved.movementPolarity == MovementPolarity.BLACK)
+			cellToBeMoved.movementPolarity = MovementPolarity.WHITE;
+		else if (cellToBeMoved.movementPolarity == MovementPolarity.WHITE)
+			cellToBeMoved.movementPolarity = MovementPolarity.BLACK;
 		else
 			System.out.println("Problem while changing polarity");
 	}
