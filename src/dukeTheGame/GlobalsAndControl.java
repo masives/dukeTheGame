@@ -11,13 +11,15 @@ public class GlobalsAndControl {
 	public static GameState gameState = GameState.PLAYER_SETUP;
 	public static FieldColor currentPlayer = FieldColor.WHITE;
 	
-	static Cell whiteDukePosition;
+	static Cell whiteDukePosition;//not used atm
 	static Cell blackDukePosition;
 	
 	/*class DukePosition{
 		int row;
 		int col;
 	}*/
+	
+	//function not used
 	static void updateDukePosition(Cell dukeCell){
 		if (GlobalsAndControl.currentPlayer == FieldColor.WHITE){
 			whiteDukePosition.row = dukeCell.row;

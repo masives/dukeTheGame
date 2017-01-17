@@ -17,42 +17,39 @@ import enums.MovementPolarity;
 import enums.TypesOfUnit;
 
 public class GameLoopHandler {
-	static Cell selectedCell = null;
+	static Cell targetCell = null;
 	static boolean drawButtonClicked = false;
 	
-	static List<Cell> posibleMovementCells = new ArrayList<Cell>();
+	static List<Cell> posibleMovementCells = new ArrayList<Cell>();//for move type units
+	//TODO additional lists to be implemented - for striking and optionally jumping
 	static Cell cellToBeMoved;
 	
 	public static void gameLoopHandler(){
 		if (drawButtonClicked==true){
 			System.out.println("Where do you want to put the unit?");
+			//TODO implement the drawing mechanincs
 		}
-		else if (selectedCell != null){
+		else if (targetCell != null){
 			if(checkMovement()){
 				moveUnit();
 				changePlayer();
-				setPanelColorsToDefault();
-				posibleMovementCells.clear();
-				selectedCell = null;
+				cancelSelection();
 			}
 			else{
-				//function for wiping the current selection
-				System.out.println("It's not movable");
-				selectedCell = null;
-				setPanelColorsToDefault();
+				System.out.println("It's not movable, choose unit again");
+				cancelSelection();
 			}
 		}
 		else if (clickedCell.unitType!=null && clickedCell.color==currentPlayer){
-			selectedCell = clickedCell;
+			targetCell = clickedCell;
 			revealPosibleMovement();
 			for(Cell cell: posibleMovementCells){
 				cell.panel.setBackground(Color.RED);
 			}
 			System.out.println("Unit selected, please choose your destination");
 		}
-		//also if the draw is picked there should be a function for drawing
 		else
-		System.out.println("Move your unit by clicking it or draw unit");
+			System.out.println("Move your unit by clicking it or draw unit");
 	}
 	
 	private static boolean checkMovement(){
@@ -68,23 +65,23 @@ public class GameLoopHandler {
 	private static void moveUnit(){
 		copyUnit();
 		deleteUnit();
-		if(selectedCell.unitType == TypesOfUnit.DUKE){
+		if(targetCell.unitType == TypesOfUnit.DUKE){
 			//endTheGame
 		}
 	}
 	
 	private static void copyUnit(){
 		cellToBeMoved.color = currentPlayer;
-		cellToBeMoved.unitType = selectedCell.unitType;
-		cellToBeMoved.movementPolarity = selectedCell.movementPolarity;
+		cellToBeMoved.unitType = targetCell.unitType;
+		cellToBeMoved.movementPolarity = targetCell.movementPolarity;
 		changeMovementPolarity();
 		cellToBeMoved.updateLabel();//to be removed later, for visibility purpose only
 	}
 	private static void deleteUnit(){
-		selectedCell.color = FieldColor.EMPTY;
-		selectedCell.unitType = TypesOfUnit.EMPTY;
-		selectedCell.movementPolarity = MovementPolarity.NONE;
-		selectedCell.updateLabel();//to be removed later
+		targetCell.color = FieldColor.EMPTY;
+		targetCell.unitType = TypesOfUnit.EMPTY;
+		targetCell.movementPolarity = MovementPolarity.NONE;
+		targetCell.updateLabel();//to be removed later
 	}
 	
 	private static void changeMovementPolarity(){//can I make a pointer and referance it or I have to reference it directly?
@@ -103,6 +100,12 @@ public class GameLoopHandler {
 			currentPlayer=FieldColor.WHITE;
 		else
 			System.out.println("There was an issue while changing player color");
+	}
+	
+	static void cancelSelection(){
+		targetCell = null;
+		setPanelColorsToDefault();
+		posibleMovementCells.clear();
 	}
 	
 	static void setPanelColorsToDefault(){

@@ -9,6 +9,7 @@ public class ApplicationMain {
 				
 		InputHandler inputHandler = new InputHandler();
 		inputHandler.addMouseListenersToBoard(window.cells);
+		MovementPatternDb.initiateMovementMaps();
 		
 		System.out.println("White player please choose a place for duke");
 	}
