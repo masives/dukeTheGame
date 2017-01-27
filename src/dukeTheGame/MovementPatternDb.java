@@ -1,21 +1,27 @@
 package dukeTheGame;
 
-import static dukeTheGame.GameLoopHandler.selectedCell;
+import static dukeTheGame.GameLoopHandler.targetCell;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MovementPatternDb {
-	static int[] emptyPattern = null;
 	static int[][] knight ={ 
 			{-1,0,  0,-1,  0,1,  1,0},
 			{-2,0,  -1,-1,  -1,1,  1,-1,  1,1}
 			};
 	
+	static Map<String, int[][]> movementPatterns = new HashMap<>();
+	
+	static public void initiateMovementMaps(){
+		movementPatterns.put("KNIGHT", knight);
+	}
+	
 	static public int[] getMovementPattern(){
-		switch(selectedCell.unitType){
-		case KNIGHT:
-			return knight[selectedCell.movementPolarity.getValue()];
-		default:
-			System.out.println("couldn't find movement pattern");
-			return emptyPattern;
-		}
+		int[] pattern = movementPatterns.get(targetCell.unitType.name())[targetCell.movementPolarity.getValue()];
+		//TODO: reverse pattern function should go here
+		
+		System.out.println("Current patern is: " +pattern);
+		return pattern;	
 	}
 }
