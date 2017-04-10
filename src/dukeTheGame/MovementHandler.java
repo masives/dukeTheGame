@@ -5,17 +5,23 @@ import static dukeTheGame.GlobalsAndControl.COL;
 import static dukeTheGame.GlobalsAndControl.ROWS;
 import static dukeTheGame.InputHandler.clickedCell;
 
+import java.util.Arrays;
+
+import enums.FieldColor;
 import enums.MovementPolarity;
 import enums.TypesOfUnit;
 
 public class MovementHandler {
 	static int[] movementPattern;
+	static int[] movementPatternThatWontBeChanged;
 	static int targetRow = 0;
 	static int targetCol = 0;
 	
 	public static void revealPosibleMovement(){	
 		if(targetCell.unitType.getMovementType().equals("walk")){
-			movementPattern=MovementPatternDb.getMovementPattern();
+			//copy of is used to not change original pattern
+			movementPattern = Arrays.copyOf(MovementPatternDb.getMovementPattern(), MovementPatternDb.getMovementPattern().length);
+			flipMovementIfNeeded();
 			revealWalkTypeMovement();
 		}
 		else if (targetCell.unitType == TypesOfUnit.DUKE){//it's only for duke vertical movement
@@ -27,15 +33,26 @@ public class MovementHandler {
 		System.out.println("Now select movement place");
 	}
 	
+	private static void flipMovementIfNeeded(){
+		if(GlobalsAndControl.currentPlayer == FieldColor.WHITE){
+		
+			for(int i=0; i< movementPattern.length; i ++){
+				if (i%2==0 || i ==0){
+					System.out.println("Current number: " + movementPattern[i]);
+					movementPattern[i]= -movementPattern[i];
+					System.out.println("after conversion: " + movementPattern[i]);
+				}
+			}
+		}
+	}
+	
 	private static void revealWalkTypeMovement(){
 		for(int i = 0; i <movementPattern.length; i++){
 			if(i%2==0 || i ==0){
 				targetRow= clickedCell.row + movementPattern[i];
-				System.out.println("target row:" + targetRow);//TODO delete after it's sure to be working
 			}
 			else if(i%2==1){
 				targetCol= clickedCell.col + movementPattern[i];
-				System.out.println("target col:" + targetCol);//TODO delete after it's sure to be working
 				if(checkBounds() && checkFriendlyCollision())//collision checking can be added to this if statement
 					posibleMovementCells.add(Screen.cells[targetRow][targetCol]);
 			}
@@ -84,11 +101,6 @@ public class MovementHandler {
 		}
 	}
 	
-	static int getTargetLine(){
-		int targetLine = (clickedCell.movementPolarity == MovementPolarity.WHITE) ? clickedCell.row : clickedCell.col;
-		return targetLine;
-	}
-	
 	static int getBound(){//despite rows and cols being the same now function will be useful for custom modes(not square board)
 		int bound = (clickedCell.movementPolarity == MovementPolarity.WHITE) ? COL: ROWS;
 		return bound;
@@ -97,6 +109,11 @@ public class MovementHandler {
 	static int getAxis(){
 		int axis = (clickedCell.movementPolarity == MovementPolarity.WHITE) ? clickedCell.col :clickedCell.row;
 		return axis;
+	}
+	
+	static int getTargetLine(){
+		int targetLine = (clickedCell.movementPolarity == MovementPolarity.WHITE) ? clickedCell.row : clickedCell.col;
+		return targetLine;
 	}
 	
 	static int getLeftStrafeIterator(int i, int targetLine){

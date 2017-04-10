@@ -19,9 +19,7 @@ public class MovementPatternDb {
 	
 	static public int[] getMovementPattern(){
 		int[] pattern = movementPatterns.get(targetCell.unitType.name())[targetCell.movementPolarity.getValue()];
-		//TODO: reverse pattern function should go here
-		
-		System.out.println("Current patern is: " +pattern);
+		//TODO: reverse pattern function is in movement handler ATM
 		return pattern;	
 	}
 }

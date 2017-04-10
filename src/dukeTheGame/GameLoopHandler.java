@@ -31,6 +31,7 @@ public class GameLoopHandler {
 		}
 		else if (targetCell != null){
 			if(checkMovement()){
+				//TODO after check movement will be check striking
 				moveUnit();
 				changePlayer();
 				cancelSelection();
@@ -68,6 +69,9 @@ public class GameLoopHandler {
 		if(targetCell.unitType == TypesOfUnit.DUKE){
 			//endTheGame
 		}
+		else if(clickedCell.unitType == TypesOfUnit.DUKE){
+			updateDukePosition();
+		}
 	}
 	
 	private static void copyUnit(){
@@ -91,6 +95,19 @@ public class GameLoopHandler {
 			cellToBeMoved.movementPolarity = MovementPolarity.BLACK;
 		else
 			System.out.println("Problem while changing polarity");
+	}
+	
+	private static void updateDukePosition(){
+		if(clickedCell.color == FieldColor.WHITE){
+			GlobalsAndControl.whiteDukePosition = clickedCell;
+			System.out.println("Current white duke position is, row:" + GlobalsAndControl.whiteDukePosition.row + " col: "+ GlobalsAndControl.whiteDukePosition.col);
+		}
+		else if (clickedCell.color == FieldColor.BLACK){
+			GlobalsAndControl.blackDukePosition = clickedCell;
+			System.out.println("Current black duke position is, row:" + GlobalsAndControl.blackDukePosition.row + " col: "+ GlobalsAndControl.blackDukePosition.col);
+		}
+		else
+			System.out.println("Problem occured while updating duke position");
 	}
 	
 	static void changePlayer(){
