@@ -91,10 +91,9 @@ public class MovementHandler {
 			//considered cell for boundaries setting 
 			Cell consideredCell = Screen.cells[getLeftStrafeIterator(i, targetLine)][getRightStrafeIterator(i, targetLine)];
 			if(consideredCell.unitType !=TypesOfUnit.EMPTY){
-				if (i < chosenAxis){
 				//conditional assigning is used to make enemy units targetable
+				if (i < chosenAxis)				
 					lowBound = (consideredCell.color == currentPlayer) ? i + 1 : i;
-				}
 				else if(i > chosenAxis)
 					highBound = (consideredCell.color == currentPlayer) ? i : i + 1;
 				else
