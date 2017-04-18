@@ -3,10 +3,12 @@ import static dukeTheGame.GameLoopHandler.posibleMovementCells;
 import static dukeTheGame.GameLoopHandler.targetCell;
 import static dukeTheGame.GlobalsAndControl.COL;
 import static dukeTheGame.GlobalsAndControl.ROWS;
+import static dukeTheGame.GlobalsAndControl.currentPlayer;
 import static dukeTheGame.InputHandler.clickedCell;
 
 import java.util.Arrays;
 
+import dukeTheGame.Screen.Cell;
 import enums.FieldColor;
 import enums.MovementPolarity;
 import enums.TypesOfUnit;
@@ -86,13 +88,17 @@ public class MovementHandler {
 		(left for vertical movement and right for horizontal) is iterable
 		*/
 		for(int i=0; i < COL;i++){
-			if(Screen.cells[getLeftStrafeIterator(i, targetLine)][getRightStrafeIterator(i, targetLine)].unitType !=TypesOfUnit.EMPTY){
-				if (i < chosenAxis)
-					lowBound = i+1;
+			//considered cell for boundaries setting 
+			Cell consideredCell = Screen.cells[getLeftStrafeIterator(i, targetLine)][getRightStrafeIterator(i, targetLine)];
+			if(consideredCell.unitType !=TypesOfUnit.EMPTY){
+				if (i < chosenAxis){
+				//conditional assigning is used to make enemy units targetable
+					lowBound = (consideredCell.color == currentPlayer) ? i + 1 : i;
+				}
 				else if(i > chosenAxis)
-					highBound = i;
+					highBound = (consideredCell.color == currentPlayer) ? i : i + 1;
 				else
-					System.out.println("Issue occured while trying to set boundaries");
+					System.out.println("Boundaries not changed");
 			}
 		}
 		for(int i=lowBound; i < highBound;i++){
