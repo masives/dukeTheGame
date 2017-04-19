@@ -34,6 +34,7 @@ public class InitialPlayerSetup {
 				System.out.println("Yup, it's the game baby! \nChoose unit to move or draw!");
 			}
 		}
+		Screen.setPanelColorsToDefault();
 	}
 	
 	static void setDuke(){

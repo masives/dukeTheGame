@@ -121,15 +121,9 @@ public class GameLoopHandler {
 	
 	static void cancelSelection(){
 		targetCell = null;
-		setPanelColorsToDefault();
+		Screen.setPanelColorsToDefault();
 		posibleMovementCells.clear();
 	}
 	
-	static void setPanelColorsToDefault(){
-		for(int i=0; i<ROWS; i++){
-			for(int j=0; j<COL; j++){
-				Screen.cells[i][j].panel.setBackground(new Color(238,238,238));
-			}
-		}
-	}
+	
 }

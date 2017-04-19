@@ -1,5 +1,8 @@
 package dukeTheGame;
 
+import static dukeTheGame.GlobalsAndControl.COL;
+import static dukeTheGame.GlobalsAndControl.ROWS;
+
 import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -73,6 +76,19 @@ public class Screen {
 			unitType = TypesOfUnit.EMPTY;
 			color = FieldColor.EMPTY;
 			movementPolarity = movementPolarity.NONE;
+		}
+	}
+	
+	static void setPanelColorsToDefault(){
+		for(int i=0; i<ROWS; i++){
+			for(int j=0; j<COL; j++){
+				if(Screen.cells[i][j].color == FieldColor.WHITE)
+					Screen.cells[i][j].panel.setBackground(new Color(0,0,0));
+				else if (Screen.cells[i][j].color == FieldColor.BLACK)
+					Screen.cells[i][j].panel.setBackground(new Color(255,255,255));
+				else	
+				Screen.cells[i][j].panel.setBackground(new Color(238,238,238));
+			}
 		}
 	}
 	
