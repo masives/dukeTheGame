@@ -7,6 +7,11 @@ import static dukeTheGame.GlobalsAndControl.gameState;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import dukeTheGame.Screen.Cell;
 
@@ -27,7 +32,7 @@ public class InputHandler {
 		cell.panel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent panelClicked) {
-				handleInput(cell);			 
+					handleInput(cell);
 			}
 		});
 	}
@@ -41,7 +46,12 @@ public class InputHandler {
 			InitialPlayerSetup.setupPlayer();
 			break;
 		case GAME_LOOP:
-			GameLoopHandler.gameLoopHandler();
+			try {
+				GameLoopHandler.gameLoopHandler();
+			} catch (ParserConfigurationException | SAXException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			break;
 		default:
 			System.out.println("something went wrong");

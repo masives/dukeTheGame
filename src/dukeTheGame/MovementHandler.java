@@ -6,7 +6,12 @@ import static dukeTheGame.GlobalsAndControl.ROWS;
 import static dukeTheGame.GlobalsAndControl.currentPlayer;
 import static dukeTheGame.InputHandler.clickedCell;
 
+import java.io.IOException;
 import java.util.Arrays;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import dukeTheGame.Screen.Cell;
 import enums.FieldColor;
@@ -18,23 +23,43 @@ public class MovementHandler {
 	static int[] movementPatternThatWontBeChanged;
 	static int targetRow = 0;
 	static int targetCol = 0;
+
+	static int[] movementWalk = null;
+	static int[] movementJump = null;
+	static int[] movementStrike = null;
+	static boolean horizontalStrafe = false;
+	static boolean verticalStrafe = false;
+
 	
 	public static void revealPosibleMovement(){	
-		if(targetCell.unitType.getMovementType().equals("walk")){
+		
+		MovementXmlParser.provideMovementInfo(GameLoopHandler.targetCell);
+		
+		if(movementWalk!=null){
 			//copy of is used to not change original pattern
-			movementPattern = Arrays.copyOf(MovementPatternDb.getMovementPattern(), MovementPatternDb.getMovementPattern().length);
+			movementPattern = Arrays.copyOf(movementWalk, movementWalk.length);
 			flipMovementIfNeeded();
 			revealWalkTypeMovement();
 		}
-		else if (targetCell.unitType == TypesOfUnit.DUKE){//it's only for duke vertical movement
+		else if (horizontalStrafe==true){//it's only for duke vertical movement
 			revealStrafeTypeMovement();
 		}
 		else
 			System.out.println("Error in checking movement.");
-		
+		//clean the state
+		 movementWalk = null;
+		clearMovement();
 		System.out.println("Now select movement place");
 	}
 	
+	private static void clearMovement() {
+		movementWalk = null;
+		movementJump = null;
+		movementStrike = null;
+		horizontalStrafe = false;
+		verticalStrafe = false;
+	}
+
 	private static void flipMovementIfNeeded(){
 		if(GlobalsAndControl.currentPlayer == FieldColor.WHITE){
 		

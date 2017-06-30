@@ -1,15 +1,17 @@
 package dukeTheGame;
 
-import static dukeTheGame.GlobalsAndControl.COL;
-import static dukeTheGame.GlobalsAndControl.ROWS;
 import static dukeTheGame.GlobalsAndControl.currentPlayer;
 import static dukeTheGame.InputHandler.clickedCell;
 import static dukeTheGame.MovementHandler.revealPosibleMovement;
 
 import java.awt.Color;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import dukeTheGame.Screen.Cell;
 import enums.FieldColor;
@@ -24,7 +26,7 @@ public class GameLoopHandler {
 	//TODO additional lists to be implemented - for striking and optionally jumping
 	static Cell cellToBeMoved;
 	
-	public static void gameLoopHandler(){
+	public static void gameLoopHandler() throws ParserConfigurationException, SAXException, IOException{
 		if (drawButtonClicked==true){
 			System.out.println("Where do you want to put the unit?");
 			//TODO implement the drawing mechanincs
