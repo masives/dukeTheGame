@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 	example unit
+	<entry id="XXX">
+		<unitType>Knight</unitType>
+		<polarity>0</polarity>
+		<movementWalk>{-1,0,  0,-1,  0,1,  1,0}</movementWalk>
+		<movementJump></movementJump>
+		<movementStrike></movementStrike>
+		<horizontalStrafe></horizontalStrafe>
+		<verticalStrafe></verticalStrafe> 
+	</entry>-->
+	
+<entries>
+	<entry id="Knight0">
+		<unitType>Knight</unitType>
+		<polarity>0</polarity>
+		<movementWalk>-1,0,  0,-1,  0,1,  1,0</movementWalk>
+	</entry>
+	
+	<entry id="Knight1">
+		<unitType>Knight</unitType>
+		<polarity>1</polarity>
+		<movementWalk>-2,0,  -1,-1,  -1,1,  1,-1,  1,1</movementWalk>
+	</entry>
+	
+	<entry id="Duke0">
+		<unitType>Duke</unitType>
+		<polarity>0</polarity>
+		<horizontalStrafe>true</horizontalStrafe>
+	</entry>-->
+	
+	<entry id="Duke1">
+		<unitType>Duke</unitType>
+		<polarity>1</polarity>
+		<verticalStrafe>true</verticalStrafe> 
+	</entry>-->
+	
+	
+</entries>
