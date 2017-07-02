@@ -1,17 +1,11 @@
 package dukeTheGame;
 import static dukeTheGame.GameLoopHandler.posibleMovementCells;
-import static dukeTheGame.GameLoopHandler.targetCell;
 import static dukeTheGame.GlobalsAndControl.COL;
 import static dukeTheGame.GlobalsAndControl.ROWS;
 import static dukeTheGame.GlobalsAndControl.currentPlayer;
 import static dukeTheGame.InputHandler.clickedCell;
 
-import java.io.IOException;
 import java.util.Arrays;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
 
 import dukeTheGame.Screen.Cell;
 import enums.FieldColor;
@@ -41,8 +35,9 @@ public class MovementHandler {
 			flipMovementIfNeeded();
 			revealWalkTypeMovement();
 		}
-		else if (horizontalStrafe==true){//it's only for duke vertical movement
+		else if (horizontalStrafe==true|| verticalStrafe==true){//it's only for duke vertical movement
 			revealStrafeTypeMovement();
+			//TODO: implement jumping and striking
 		}
 		else
 			System.out.println("Error in checking movement.");
