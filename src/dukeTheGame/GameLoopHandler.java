@@ -66,14 +66,15 @@ public class GameLoopHandler {
 	}
 	
 	private static void moveUnit(){
+		System.out.println("Moving unit");
+		if(clickedCell.unitType == TypesOfUnit.DUKE){
+			System.out.println("Game over");
+		}
+		else if(targetCell.unitType == TypesOfUnit.DUKE){
+			updateDukePosition();
+		}		
 		copyUnit();
 		deleteUnit();
-		if(targetCell.unitType == TypesOfUnit.DUKE){
-			//endTheGame
-		}
-		else if(clickedCell.unitType == TypesOfUnit.DUKE){
-			updateDukePosition();
-		}
 	}
 	
 	private static void copyUnit(){
@@ -100,11 +101,11 @@ public class GameLoopHandler {
 	}
 	
 	private static void updateDukePosition(){
-		if(clickedCell.color == FieldColor.WHITE){
+		if(targetCell.color == FieldColor.WHITE){
 			GlobalsAndControl.whiteDukePosition = clickedCell;
 			System.out.println("Current white duke position is, row:" + GlobalsAndControl.whiteDukePosition.row + " col: "+ GlobalsAndControl.whiteDukePosition.col);
 		}
-		else if (clickedCell.color == FieldColor.BLACK){
+		else if (targetCell.color == FieldColor.BLACK){
 			GlobalsAndControl.blackDukePosition = clickedCell;
 			System.out.println("Current black duke position is, row:" + GlobalsAndControl.blackDukePosition.row + " col: "+ GlobalsAndControl.blackDukePosition.col);
 		}
