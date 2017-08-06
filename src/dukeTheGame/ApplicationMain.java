@@ -1,7 +1,5 @@
 package dukeTheGame;
 
-import static dukeTheGame.GlobalsAndControl.gameState;
-
 import enums.FieldColor;
 import enums.GameState;
 import enums.TypesOfUnit;
