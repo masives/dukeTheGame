@@ -83,9 +83,9 @@ public class Screen {
 		for(int i=0; i<ROWS; i++){
 			for(int j=0; j<COL; j++){
 				if(Screen.cells[i][j].color == FieldColor.WHITE)
-					Screen.cells[i][j].panel.setBackground(new Color(0,0,0));
-				else if (Screen.cells[i][j].color == FieldColor.BLACK)
 					Screen.cells[i][j].panel.setBackground(new Color(255,255,255));
+				else if (Screen.cells[i][j].color == FieldColor.BLACK)
+					Screen.cells[i][j].panel.setBackground(new Color(0,0,0));
 				else	
 				Screen.cells[i][j].panel.setBackground(new Color(238,238,238));
 			}
