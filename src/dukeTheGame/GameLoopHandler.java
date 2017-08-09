@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
@@ -69,6 +70,7 @@ public class GameLoopHandler {
 		System.out.println("Moving unit");
 		if(clickedCell.unitType == TypesOfUnit.DUKE){
 			System.out.println("Game over");
+			endGame(currentPlayer);
 		}
 		else if(targetCell.unitType == TypesOfUnit.DUKE){
 			updateDukePosition();
@@ -127,6 +129,21 @@ public class GameLoopHandler {
 		Screen.setPanelColorsToDefault();
 		posibleMovementCells.clear();
 	}
-	
-	
+	static void endGame(FieldColor winner){
+		//show message
+		Object[] options = { "Play again", "Exit" };
+		int buttonClicked= JOptionPane.showOptionDialog(null, "Congrats, " + currentPlayer.toString() + " player wins!", "Game over",
+		JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+		null, options, options[0]);
+		
+		
+		//restart the game
+		if(buttonClicked ==0){
+			System.out.println("restarting the game");
+			//TODO:implement restart
+		}
+		//end restart the game
+		else
+			System.exit(0);
+	}
 }
