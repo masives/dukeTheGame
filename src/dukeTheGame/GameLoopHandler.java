@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JOptionPane;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
@@ -93,14 +94,16 @@ public class GameLoopHandler {
 	}
 	
 	private static void moveUnit(){
+		System.out.println("Moving unit");
+		if(clickedCell.unitType == TypesOfUnit.DUKE){
+			System.out.println("Game over");
+			endGame(currentPlayer);
+		}
+		else if(targetCell.unitType == TypesOfUnit.DUKE){
+			updateDukePosition();
+		}		
 		copyUnit();
 		deleteUnit();
-		if(targetCell.unitType == TypesOfUnit.DUKE){
-			//endTheGame
-		}
-		else if(clickedCell.unitType == TypesOfUnit.DUKE){
-			updateDukePosition();
-		}
 	}
 	
 	private static void copyUnit(){
@@ -127,11 +130,11 @@ public class GameLoopHandler {
 	}
 	
 	private static void updateDukePosition(){
-		if(clickedCell.color == FieldColor.WHITE){
+		if(targetCell.color == FieldColor.WHITE){
 			GlobalsAndControl.whiteDukePosition = clickedCell;
 			System.out.println("Current white duke position is, row:" + GlobalsAndControl.whiteDukePosition.row + " col: "+ GlobalsAndControl.whiteDukePosition.col);
 		}
-		else if (clickedCell.color == FieldColor.BLACK){
+		else if (targetCell.color == FieldColor.BLACK){
 			GlobalsAndControl.blackDukePosition = clickedCell;
 			System.out.println("Current black duke position is, row:" + GlobalsAndControl.blackDukePosition.row + " col: "+ GlobalsAndControl.blackDukePosition.col);
 		}
@@ -154,6 +157,21 @@ public class GameLoopHandler {
 		posibleMovementCells.clear();
 		possibleDrawCells.clear();
 	}
-	
-	
+	static void endGame(FieldColor winner){
+		//show message
+		Object[] options = { "Play again", "Exit" };
+		int buttonClicked= JOptionPane.showOptionDialog(null, "Congrats, " + currentPlayer.toString() + " player wins!", "Game over",
+		JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+		null, options, options[0]);
+		
+		
+		//restart the game
+		if(buttonClicked ==0){
+			System.out.println("restarting the game");
+			//TODO:implement restart
+		}
+		//end restart the game
+		else
+			System.exit(0);
+	}
 }

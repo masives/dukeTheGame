@@ -79,7 +79,7 @@ public class Screen {
 		}
 	}
 	
-	static void setPanelColorsToDefault(){
+	public static void setPanelColorsToDefault(){
 		for(int i=0; i<ROWS; i++){
 			for(int j=0; j<COL; j++){
 				if(Screen.cells[i][j].color == FieldColor.WHITE)
@@ -111,6 +111,8 @@ public class Screen {
 		}
 	});
 	}
+
+
 	
 	
 }
