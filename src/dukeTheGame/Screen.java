@@ -83,9 +83,9 @@ public class Screen {
 		for(int i=0; i<ROWS; i++){
 			for(int j=0; j<COL; j++){
 				if(Screen.cells[i][j].color == FieldColor.WHITE)
-					Screen.cells[i][j].panel.setBackground(new Color(0,0,0));
-				else if (Screen.cells[i][j].color == FieldColor.BLACK)
 					Screen.cells[i][j].panel.setBackground(new Color(255,255,255));
+				else if (Screen.cells[i][j].color == FieldColor.BLACK)
+					Screen.cells[i][j].panel.setBackground(new Color(0,0,0));
 				else	
 				Screen.cells[i][j].panel.setBackground(new Color(238,238,238));
 			}
@@ -98,8 +98,16 @@ public class Screen {
 	frame.getContentPane().add(button);
 	button.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent e){
+			DrawHandler.showPossiblePlaces();
+			
+			if (GameLoopHandler.possibleDrawCells.isEmpty())
+				System.out.println("You cannot put figure, there's no room");
+			else if (DrawHandler.getCurrentPool().length == 0)
+				System.out.println("No more figures to draw");
+			else {
 			GameLoopHandler.drawButtonClicked = true;
 			System.out.println("Draw button clicked");
+			}
 		}
 	});
 	}
