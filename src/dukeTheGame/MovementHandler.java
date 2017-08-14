@@ -75,15 +75,15 @@ public class MovementHandler {
 			}
 			else if(i%2==1){
 				targetCol= clickedCell.col + movementPattern[i];
-				if(checkBounds() && checkFriendlyCollision())//collision checking can be added to this if statement
+				if(checkBounds(targetRow, targetCol) && checkFriendlyCollision())//collision checking can be added to this if statement
 					posibleMovementCells.add(Screen.cells[targetRow][targetCol]);
 			}
 			else
 				System.out.println("Something went wrong");
 		}
 	}
-	
-	private static boolean checkBounds(){
+	//changed to public to allow reuse in draw
+	public static boolean checkBounds(int targetRow, int targetCol){
 		if ((0 <= targetRow && targetRow < ROWS) && (0 <= targetCol && targetCol < COL))
 			return true;
 		else

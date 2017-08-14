@@ -34,7 +34,6 @@ public class MovementXmlParser{
 	try {
 		builder = df.newDocumentBuilder();
 		document = builder.parse("Movement.xml");
-	
 		
 		NodeList movementNodeList = document.getElementsByTagName("entry");
 			

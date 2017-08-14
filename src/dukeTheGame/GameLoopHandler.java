@@ -22,6 +22,7 @@ public class GameLoopHandler {
 	static Cell targetCell = null;
 	static boolean drawButtonClicked = false;
 	
+	static List<Cell> possibleDrawCells = new ArrayList<Cell>();
 	static List<Cell> posibleMovementCells = new ArrayList<Cell>();//for move type units
 	//TODO additional lists to be implemented - for striking and optionally jumping
 	static Cell cellToBeMoved;
@@ -29,7 +30,23 @@ public class GameLoopHandler {
 	public static void gameLoopHandler() throws ParserConfigurationException, SAXException, IOException{
 		if (drawButtonClicked==true){
 			System.out.println("Where do you want to put the unit?");
-			//TODO implement the drawing mechanincs
+			//highlighting and checking movement are triggered by mouse listener
+			//places are shown during clicking the button (on Screen)
+			//check if clicked button is on the checking list
+			//if places shown draw assign unit and unclick button
+			System.out.println("Checking draw");
+			
+			if(checkDraw()) {
+				System.out.println("Draw check passed");
+				DrawHandler.addUnitToCell(clickedCell);
+				DrawHandler.deleteFromPool();
+				cancelSelection();
+				changePlayer();
+			}
+			else {
+				drawButtonClicked = false;
+				cancelSelection();
+			}
 		}
 		else if (targetCell != null){
 			if(checkMovement()){
@@ -53,6 +70,16 @@ public class GameLoopHandler {
 		}
 		else
 			System.out.println("Move your unit by clicking it or draw unit");
+	}
+	//can be merged into one function with checkMovement
+	private static boolean checkDraw(){
+		for(Cell targetCell:possibleDrawCells){
+			if(clickedCell==targetCell){
+				cellToBeMoved = targetCell;
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	private static boolean checkMovement(){
@@ -125,6 +152,7 @@ public class GameLoopHandler {
 		targetCell = null;
 		Screen.setPanelColorsToDefault();
 		posibleMovementCells.clear();
+		possibleDrawCells.clear();
 	}
 	
 	

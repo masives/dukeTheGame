@@ -98,8 +98,16 @@ public class Screen {
 	frame.getContentPane().add(button);
 	button.addActionListener(new ActionListener(){
 		public void actionPerformed(ActionEvent e){
+			DrawHandler.showPossiblePlaces();
+			
+			if (GameLoopHandler.possibleDrawCells.isEmpty())
+				System.out.println("You cannot put figure, there's no room");
+			else if (DrawHandler.getCurrentPool().length == 0)
+				System.out.println("No more figures to draw");
+			else {
 			GameLoopHandler.drawButtonClicked = true;
 			System.out.println("Draw button clicked");
+			}
 		}
 	});
 	}
