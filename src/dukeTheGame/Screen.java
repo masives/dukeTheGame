@@ -112,7 +112,19 @@ public class Screen {
 	});
 	}
 
-
+	public static void resetBoard(){
+		for (Cell[] cell : cells){
+			for (Cell innerCell:cell){
+				wipeCell(innerCell);
+			}
+		}
+	}
+	private static void wipeCell(Cell innerCell){
+		innerCell.unitType = TypesOfUnit.EMPTY;
+		innerCell.color = FieldColor.EMPTY;
+		innerCell.movementPolarity = MovementPolarity.NONE;
+		innerCell.updateLabel();
+	}
 	
 	
 }

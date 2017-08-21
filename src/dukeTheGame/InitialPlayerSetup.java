@@ -116,4 +116,9 @@ public class InitialPlayerSetup {
 		else
 			currentPlayer = FieldColor.WHITE;
 	}
+	
+	public static void resetPlayerSetup(){
+		wasDukeSet = false;
+		numberOfKnightsSet = 0;
+	}
 }

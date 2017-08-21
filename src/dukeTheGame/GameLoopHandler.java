@@ -101,7 +101,7 @@ public class GameLoopHandler {
 		}
 		else if(targetCell.unitType == TypesOfUnit.DUKE){
 			updateDukePosition();
-		}		
+		}
 		copyUnit();
 		deleteUnit();
 	}
@@ -168,10 +168,17 @@ public class GameLoopHandler {
 		//restart the game
 		if(buttonClicked ==0){
 			System.out.println("restarting the game");
+			restartGame();
 			//TODO:implement restart
 		}
 		//end restart the game
 		else
 			System.exit(0);
+	}
+	private static void restartGame(){
+		InitialPlayerSetup.resetPlayerSetup();
+		GlobalsAndControl.resetGlobals();
+		Screen.resetBoard();
+		cancelSelection();
 	}
 }

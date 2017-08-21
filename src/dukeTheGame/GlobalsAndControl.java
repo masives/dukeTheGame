@@ -14,12 +14,6 @@ public class GlobalsAndControl {
 	static Cell whiteDukePosition;//not used atm
 	static Cell blackDukePosition;
 	
-	/*class DukePosition{
-		int row;
-		int col;
-	}*/
-	
-	//function not used
 	static void updateDukePosition(Cell dukeCell){
 		if (GlobalsAndControl.currentPlayer == FieldColor.WHITE){
 			whiteDukePosition.row = dukeCell.row;
@@ -29,5 +23,11 @@ public class GlobalsAndControl {
 			blackDukePosition.row = dukeCell.row;
 			blackDukePosition.col = dukeCell.col;
 		}
+	}
+	public static void resetGlobals(){
+		gameState = GameState.PLAYER_SETUP;
+		currentPlayer = FieldColor.WHITE;
+		whiteDukePosition = null;
+		blackDukePosition = null;
 	}
 }

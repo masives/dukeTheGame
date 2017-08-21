@@ -104,7 +104,7 @@ public class MovementHandler {
 		int targetLine = getTargetLine();
 		
 		/*function uses two separate iterators 
-		because there should one of them 
+		because there should one of them for each axis
 		(left for vertical movement and right for horizontal) is iterable
 		*/
 		for(int i=0; i < COL;i++){
